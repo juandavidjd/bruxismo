@@ -309,10 +309,19 @@ function Proceso() {
 }
 
 /* ═══════════════════════════════════════════
-   CURSO INEC
+   CURSO INEC — SECCIÓN EXPANDIDA
    ═══════════════════════════════════════════ */
+const MODULOS = [
+  { num: "01", title: "Fundamentos del bruxismo", desc: "Que es, tipos (sueno vs diurno), prevalencia, factores de riesgo. Basado en 186 papers cientificos indexados.", icon: "📚" },
+  { num: "02", title: "Diagnostico clinico", desc: "7 senales de alerta, herramientas de evaluacion, como identificar bruxismo en tus pacientes.", icon: "🔍" },
+  { num: "03", title: "Tecnicas de impresion", desc: "Materiales, cubetas, tiempos de fraguado, errores comunes. Sesion practica en vivo.", icon: "🦷" },
+  { num: "04", title: "Fabricacion de protectores", desc: "Termoplastico de grado medico, calibracion de grosor, acabado y pulido. Medical, Sport y Smokover.", icon: "🏭" },
+  { num: "05", title: "Manejo de pacientes", desc: "Comunicacion, seguimiento, ajustes post-entrega, casos especiales (ninos, deportistas, fumadores).", icon: "🤝" },
+  { num: "06", title: "Certificacion y practica", desc: "Evaluacion final, caso clinico completo, entrega de certificacion INEC.", icon: "🎓" },
+];
+
 function CursoINEC() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", profile: "", city: "", message: "" });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
@@ -338,113 +347,198 @@ function CursoINEC() {
 
   return (
     <section className="py-20 bg-cream">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6 space-y-16">
+
+        {/* HEADER DEL CURSO */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="text-center">
+          <motion.span variants={fade} className="inline-block bg-accent/10 text-accent text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
+            Convocatoria abierta — Cupos limitados
+          </motion.span>
+          <motion.h2 variants={fade} className="text-3xl md:text-5xl font-bold text-navy mb-4">
+            Curso de Proteccion Dental Personalizada
+          </motion.h2>
+          <motion.p variants={fade} className="text-xl text-gray-500 mb-2">
+            COVER'S Lab + INEC
+          </motion.p>
+          <motion.p variants={fade} className="text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            El bruxismo afecta al 30% de la poblacion adulta, pero menos del 5% de los profesionales
+            saben fabricar la solucion. Este curso te certifica en diagnostico, impresion y fabricacion
+            de protectores dentales personalizados.
+          </motion.p>
+        </motion.div>
+
+        {/* IMAGEN HERO CURSO */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade}>
+          <img
+            src={img("curso-laboratorio-dental.jpg")}
+            alt="Laboratorio dental moderno COVERS"
+            className="rounded-2xl shadow-xl w-full"
+          />
+        </motion.div>
+
+        {/* PARA QUIEN ES */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+          <motion.h3 variants={fade} className="text-2xl font-bold text-navy mb-6 text-center">¿Para quien es este curso?</motion.h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { icon: "🦷", title: "Odontologos", desc: "Que quieren ofrecer proteccion dental como servicio adicional en su consultorio." },
+              { icon: "🎓", title: "Estudiantes", desc: "De odontologia, protesis dental o higiene oral que buscan especializarse." },
+              { icon: "🔬", title: "Tecnicos dentales", desc: "Que fabrican protesis y quieren dominar protectores oclusales personalizados." },
+              { icon: "💼", title: "Emprendedores", desc: "Del sector salud que ven oportunidad en proteccion dental preventiva." },
+            ].map((p, i) => (
+              <motion.div key={i} variants={fade} className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <span className="text-3xl mb-3 block">{p.icon}</span>
+                <h4 className="font-bold text-navy mb-1">{p.title}</h4>
+                <p className="text-gray-500 text-sm leading-relaxed">{p.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* 6 MODULOS */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+          <motion.h3 variants={fade} className="text-2xl font-bold text-navy mb-8 text-center">6 modulos — De teoria a practica</motion.h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {MODULOS.map((m, i) => (
+              <motion.div key={i} variants={fade} className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+                <div className="flex items-start gap-4">
+                  <span className="text-3xl">{m.icon}</span>
+                  <div>
+                    <span className="text-xs font-semibold text-teal">Modulo {m.num}</span>
+                    <h4 className="font-bold text-navy mt-0.5 mb-2">{m.title}</h4>
+                    <p className="text-gray-500 text-sm leading-relaxed">{m.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* IMAGENES: ODONTOLOGA + 3 LINEAS */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid md:grid-cols-2 gap-8">
+          <motion.div variants={fade}>
+            <img src={img("curso-odontologa-paciente.jpg")} alt="Odontologa con paciente" className="rounded-2xl shadow-xl w-full h-72 object-cover" />
+            <p className="text-center text-sm text-gray-400 mt-3">Sesion practica: impresion dental en paciente real</p>
+          </motion.div>
+          <motion.div variants={fade}>
+            <img src={img("tres-lineas-covers.jpg")} alt="3 lineas COVERS" className="rounded-2xl shadow-xl w-full h-72 object-cover" />
+            <p className="text-center text-sm text-gray-400 mt-3">Medical · Sport · Smokover — fabricacion personalizada</p>
+          </motion.div>
+        </motion.div>
+
+        {/* QUE INCLUYE */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="bg-navy rounded-3xl p-8 md:p-12 text-white">
+          <motion.h3 variants={fade} className="text-2xl font-bold mb-8 text-center">¿Que incluye tu inscripcion?</motion.h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              "Material didactico completo (digital)",
+              "Acceso a 186 papers cientificos indexados sobre bruxismo",
+              "Sesion practica de impresion dental en vivo",
+              "Kit de materiales para practica (incluido)",
+              "Fabricacion supervisada de tu primer protector",
+              "Certificacion INEC al completar todos los modulos",
+              "Acceso al grupo profesional COVER'S Lab",
+              "Descuento permanente en materiales de fabricacion",
+            ].map((item, i) => (
+              <motion.div key={i} variants={fade} className="flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                <span className="text-gray-300 text-sm leading-relaxed">{item}</span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* CERTIFICACION */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} className="text-center">
+          <img src={img("curso-certificacion-profesional.jpg")} alt="Certificacion INEC" className="rounded-2xl shadow-xl w-full max-w-4xl mx-auto" />
+          <p className="text-gray-500 text-sm mt-4 max-w-2xl mx-auto">
+            Al completar los 6 modulos y aprobar la evaluacion practica, recibes certificacion oficial del INEC
+            en Proteccion Dental Personalizada — respaldada por COVER'S Lab.
+          </p>
+        </motion.div>
+
+        {/* FORMULARIO DE INSCRIPCION */}
         <motion.div
           initial="hidden" whileInView="visible" viewport={{ once: true }}
           variants={stagger}
-          className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100"
+          className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100 max-w-2xl mx-auto"
         >
-          <div className="grid md:grid-cols-2 gap-10 items-start">
-            <motion.div variants={fade}>
-              <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                Convocatoria abierta
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
-                Curso de Proteccion Dental — INEC
-              </h2>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                Aprende a identificar el bruxismo en tus pacientes, domina las tecnicas
-                de impresion y fabricacion de protectores oclusales, y certifica tus
-                competencias con respaldo cientifico.
-              </p>
-              <ul className="space-y-3 mb-6">
-                {[
-                  "Fundamentos clinicos del bruxismo",
-                  "Tecnicas de impresion y modelos de trabajo",
-                  "Fabricacion de Medical, Sport y Smokover",
-                  "Manejo de pacientes y seguimiento",
-                  "Certificacion INEC al completar",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-gray-600">
-                    <CheckCircle2 className="w-5 h-5 text-teal flex-shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <img
-                src={img("deportista-colocando-protector.jpg")}
-                alt="Deportista con protector COVERS"
-                className="rounded-2xl shadow-lg w-full mt-4"
-              />
-              <p className="text-center text-xs text-gray-400 mt-3">
-                Cupos limitados — convocatoria activa
-              </p>
+          <motion.div variants={fade} className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-navy mb-2">Inscribete al curso</h3>
+            <p className="text-gray-500">Dejanos tus datos y te contactamos con fechas, costos y toda la informacion.</p>
+          </motion.div>
+
+          {sent ? (
+            <motion.div variants={fade} className="text-center py-8">
+              <CheckCircle2 className="w-16 h-16 text-teal mx-auto mb-4" />
+              <h4 className="text-xl font-bold text-navy mb-2">Inscripcion recibida</h4>
+              <p className="text-gray-500">Te contactaremos con los detalles del curso. Revisa tu email.</p>
             </motion.div>
-
-            {/* Formulario de inscripcion */}
-            <motion.div variants={fade}>
-              <div className="bg-cream rounded-2xl p-6 md:p-8">
-                <h3 className="text-xl font-bold text-navy mb-2">Inscribete al curso</h3>
-                <p className="text-gray-500 text-sm mb-6">Dejanos tus datos y te contactamos con toda la informacion.</p>
-
-                {sent ? (
-                  <div className="text-center py-8">
-                    <CheckCircle2 className="w-14 h-14 text-teal mx-auto mb-3" />
-                    <h4 className="text-lg font-bold text-navy mb-1">Inscripcion recibida</h4>
-                    <p className="text-gray-500 text-sm">Te contactaremos con los detalles del curso.</p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Nombre completo *</label>
-                      <input
-                        type="text" required value={form.name}
-                        onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all text-gray-900"
-                        placeholder="Tu nombre"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
-                      <input
-                        type="email" required value={form.email}
-                        onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all text-gray-900"
-                        placeholder="tu@email.com"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Telefono</label>
-                      <input
-                        type="tel" value={form.phone}
-                        onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all text-gray-900"
-                        placeholder="+57 300 123 4567"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">¿Por que te interesa el curso?</label>
-                      <textarea
-                        value={form.message}
-                        onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all resize-none text-gray-900"
-                        rows={3}
-                        placeholder="Soy odontologo, estudiante, tecnico dental..."
-                      />
-                    </div>
-                    {error && <p className="text-red-500 text-sm">{error}</p>}
-                    <button
-                      type="submit" disabled={sending}
-                      className="w-full bg-accent hover:bg-accent/90 disabled:opacity-50 text-white py-3 rounded-xl font-semibold transition-all shadow-lg shadow-accent/25 flex items-center justify-center gap-2"
-                    >
-                      {sending ? "Enviando..." : <><ArrowRight className="w-4 h-4" /> Inscribirme al curso</>}
-                    </button>
-                  </form>
-                )}
+          ) : (
+            <motion.form variants={fade} onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Nombre completo *</label>
+                  <input type="text" required value={form.name}
+                    onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all text-gray-900"
+                    placeholder="Tu nombre" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                  <input type="email" required value={form.email}
+                    onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all text-gray-900"
+                    placeholder="tu@email.com" />
+                </div>
               </div>
-            </motion.div>
-          </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Telefono / WhatsApp</label>
+                  <input type="tel" value={form.phone}
+                    onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all text-gray-900"
+                    placeholder="+57 300 123 4567" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
+                  <input type="text" value={form.city}
+                    onChange={e => setForm(f => ({ ...f, city: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all text-gray-900"
+                    placeholder="Pereira, Bogota, Medellin..." />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Perfil profesional</label>
+                <select value={form.profile}
+                  onChange={e => setForm(f => ({ ...f, profile: e.target.value }))}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all text-gray-900">
+                  <option value="">Selecciona tu perfil</option>
+                  <option value="odontologo">Odontologo(a)</option>
+                  <option value="estudiante">Estudiante de odontologia</option>
+                  <option value="tecnico_dental">Tecnico dental / Protesista</option>
+                  <option value="higienista">Higienista oral</option>
+                  <option value="emprendedor">Emprendedor sector salud</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">¿Por que te interesa el curso?</label>
+                <textarea value={form.message}
+                  onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all resize-none text-gray-900"
+                  rows={3} placeholder="Cuentanos sobre tu experiencia y que esperas del curso..." />
+              </div>
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+              <button type="submit" disabled={sending}
+                className="w-full bg-accent hover:bg-accent/90 disabled:opacity-50 text-white py-4 rounded-xl font-semibold text-lg transition-all shadow-lg shadow-accent/25 flex items-center justify-center gap-2">
+                {sending ? "Enviando..." : <><ArrowRight className="w-5 h-5" /> Quiero inscribirme</>}
+              </button>
+              <p className="text-center text-xs text-gray-400">Sin compromiso. Te contactamos para darte toda la informacion.</p>
+            </motion.form>
+          )}
         </motion.div>
+
       </div>
     </section>
   );
