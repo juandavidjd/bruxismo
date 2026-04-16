@@ -312,6 +312,30 @@ function Proceso() {
    CURSO INEC
    ═══════════════════════════════════════════ */
 function CursoINEC() {
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.email) return;
+    setSending(true);
+    setError("");
+    try {
+      const resp = await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, interest: "curso_inec", source: "bruxismo.my-covers.com" }),
+      });
+      if (resp.ok) setSent(true);
+      else setError("No se pudo enviar. Intenta de nuevo.");
+    } catch {
+      setError("Error de conexion. Intenta de nuevo.");
+    }
+    setSending(false);
+  };
+
   return (
     <section className="py-20 bg-cream">
       <div className="max-w-6xl mx-auto px-6">
@@ -320,7 +344,7 @@ function CursoINEC() {
           variants={stagger}
           className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100"
         >
-          <div className="grid md:grid-cols-2 gap-10 items-center">
+          <div className="grid md:grid-cols-2 gap-10 items-start">
             <motion.div variants={fade}>
               <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-4">
                 Convocatoria abierta
@@ -347,19 +371,77 @@ function CursoINEC() {
                   </li>
                 ))}
               </ul>
-              <a href="#contacto" className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-xl font-semibold transition-all shadow-lg shadow-accent/25">
-                Inscribirme <ArrowRight className="w-4 h-4" />
-              </a>
-            </motion.div>
-            <motion.div variants={fade}>
               <img
                 src={img("deportista-colocando-protector.jpg")}
                 alt="Deportista con protector COVERS"
-                className="rounded-2xl shadow-lg w-full"
+                className="rounded-2xl shadow-lg w-full mt-4"
               />
               <p className="text-center text-xs text-gray-400 mt-3">
                 Cupos limitados — convocatoria activa
               </p>
+            </motion.div>
+
+            {/* Formulario de inscripcion */}
+            <motion.div variants={fade}>
+              <div className="bg-cream rounded-2xl p-6 md:p-8">
+                <h3 className="text-xl font-bold text-navy mb-2">Inscribete al curso</h3>
+                <p className="text-gray-500 text-sm mb-6">Dejanos tus datos y te contactamos con toda la informacion.</p>
+
+                {sent ? (
+                  <div className="text-center py-8">
+                    <CheckCircle2 className="w-14 h-14 text-teal mx-auto mb-3" />
+                    <h4 className="text-lg font-bold text-navy mb-1">Inscripcion recibida</h4>
+                    <p className="text-gray-500 text-sm">Te contactaremos con los detalles del curso.</p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Nombre completo *</label>
+                      <input
+                        type="text" required value={form.name}
+                        onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all text-gray-900"
+                        placeholder="Tu nombre"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                      <input
+                        type="email" required value={form.email}
+                        onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all text-gray-900"
+                        placeholder="tu@email.com"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Telefono</label>
+                      <input
+                        type="tel" value={form.phone}
+                        onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all text-gray-900"
+                        placeholder="+57 300 123 4567"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">¿Por que te interesa el curso?</label>
+                      <textarea
+                        value={form.message}
+                        onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-teal focus:ring-2 focus:ring-teal/20 outline-none transition-all resize-none text-gray-900"
+                        rows={3}
+                        placeholder="Soy odontologo, estudiante, tecnico dental..."
+                      />
+                    </div>
+                    {error && <p className="text-red-500 text-sm">{error}</p>}
+                    <button
+                      type="submit" disabled={sending}
+                      className="w-full bg-accent hover:bg-accent/90 disabled:opacity-50 text-white py-3 rounded-xl font-semibold transition-all shadow-lg shadow-accent/25 flex items-center justify-center gap-2"
+                    >
+                      {sending ? "Enviando..." : <><ArrowRight className="w-4 h-4" /> Inscribirme al curso</>}
+                    </button>
+                  </form>
+                )}
+              </div>
             </motion.div>
           </div>
         </motion.div>
