@@ -735,7 +735,7 @@ function Footer() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 className="text-lg font-bold mb-3">COVER'S Lab</h3>
+            <img src={img("covers-logo.png")} alt="COVER'S Lab" className="h-16 w-auto mb-3" />
             <p className="text-gray-400 text-sm leading-relaxed">
               Protectores dentales personalizados. Fabricados a la medida exacta de tu mordida.
               Medical · Sport · Smokover.
