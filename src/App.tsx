@@ -228,7 +228,7 @@ function Consecuencias() {
               className="rounded-2xl shadow-xl w-full max-w-4xl mx-auto"
             />
             <p className="text-center text-sm text-gray-400 mt-3">
-              Izquierda: desgaste por bruxismo no tratado. Derecha: dientes protegidos con guarda oclusal.
+              Izquierda: el dolor de no protegerte. Derecha: la tranquilidad de dormir protegida.
             </p>
           </motion.div>
         </motion.div>
