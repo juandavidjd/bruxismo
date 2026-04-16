@@ -16,15 +16,58 @@ const stagger = { visible: { transition: { staggerChildren: 0.12 } } };
 /* ═══════════════════════════════════════════
    HERO
    ═══════════════════════════════════════════ */
+const HERO_VIDEOS = [
+  "https://api.liveodi.com/assets/videos/covers-01-rechinas.mp4",
+  "https://api.liveodi.com/assets/videos/covers-02-costo.mp4",
+  "https://api.liveodi.com/assets/videos/covers-03-sport.mp4",
+  "https://api.liveodi.com/assets/videos/covers-04-inec.mp4",
+  "https://api.liveodi.com/assets/videos/covers-05-smokover.mp4",
+  "https://api.liveodi.com/assets/videos/covers-06-alejandra.mp4",
+  "https://api.liveodi.com/assets/videos/covers-07-testimonio.mp4",
+  "https://api.liveodi.com/assets/videos/covers-08-3pasos.mp4",
+  "https://api.liveodi.com/assets/videos/covers-09-ninos.mp4",
+  "https://api.liveodi.com/assets/videos/covers-10-odi.mp4",
+];
+
+function HeroVideo() {
+  const refA = useRef<HTMLVideoElement>(null);
+  const refB = useRef<HTMLVideoElement>(null);
+  const idx = useRef(0);
+  const current = useRef<"a" | "b">("a");
+
+  const getEls = () => ({ a: refA.current!, b: refB.current! });
+
+  const swap = () => {
+    const { a, b } = getEls();
+    idx.current = (idx.current + 1) % HERO_VIDEOS.length;
+    const next = current.current === "a" ? b : a;
+    const prev = current.current === "a" ? a : b;
+    next.src = HERO_VIDEOS[idx.current];
+    next.play();
+    next.style.opacity = "1";
+    prev.style.opacity = "0";
+    current.current = current.current === "a" ? "b" : "a";
+    // Preload next
+    const nextIdx = (idx.current + 1) % HERO_VIDEOS.length;
+    prev.src = HERO_VIDEOS[nextIdx];
+    prev.load();
+  };
+
+  return (
+    <>
+      <video ref={refA} className="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-700"
+        autoPlay muted playsInline onEnded={swap} src={HERO_VIDEOS[0]} />
+      <video ref={refB} className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700"
+        muted playsInline onEnded={swap} />
+    </>
+  );
+}
+
 function Hero() {
   return (
     <section className="relative min-h-[70vh] md:min-h-[90vh] flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img
-          src={img("bruxismo-persona-durmiendo-tension.jpg")}
-          alt="Persona durmiendo con tension mandibular"
-          className="w-full h-full object-cover"
-        />
+        <HeroVideo />
         <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/70 to-navy/40" />
       </div>
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 md:py-32">
