@@ -29,46 +29,27 @@ const HERO_VIDEOS = [
 ];
 
 function HeroVideo() {
-  const refA = useRef<HTMLVideoElement>(null);
-  const refB = useRef<HTMLVideoElement>(null);
-  const blobs = useRef<string[]>([]);
+  const ref = useRef<HTMLVideoElement>(null);
   const idx = useRef(0);
-  const current = useRef<"a" | "b">("a");
 
-  // Preload all videos as blobs on mount
-  useState(() => {
-    HERO_VIDEOS.forEach((url, i) => {
-      fetch(url).then(r => r.blob()).then(b => {
-        blobs.current[i] = URL.createObjectURL(b);
-      });
-    });
-  });
-
-  const getUrl = (i: number) => blobs.current[i] || HERO_VIDEOS[i];
-
-  const swap = () => {
-    const a = refA.current!;
-    const b = refB.current!;
+  const playNext = () => {
     idx.current = (idx.current + 1) % HERO_VIDEOS.length;
-    const next = current.current === "a" ? b : a;
-    const prev = current.current === "a" ? a : b;
-    next.src = getUrl(idx.current);
-    next.play();
-    next.style.opacity = "1";
-    prev.style.opacity = "0";
-    current.current = current.current === "a" ? "b" : "a";
-    // Preload next in other element
-    const nextIdx = (idx.current + 1) % HERO_VIDEOS.length;
-    prev.src = getUrl(nextIdx);
-    prev.load();
+    const v = ref.current;
+    if (!v) return;
+    v.src = HERO_VIDEOS[idx.current];
+    v.load();
+    v.play().catch(() => {});
   };
 
   return (
     <>
-      <video ref={refA} className="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-700"
-        autoPlay muted playsInline onEnded={swap} src={HERO_VIDEOS[0]} />
-      <video ref={refB} className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700"
-        muted playsInline onEnded={swap} />
+      <video
+        ref={ref}
+        className="absolute inset-0 w-full h-full object-cover"
+        autoPlay muted playsInline
+        src={HERO_VIDEOS[0]}
+        onEnded={playNext}
+      />
     </>
   );
 }
