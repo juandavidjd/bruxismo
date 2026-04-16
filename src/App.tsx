@@ -26,30 +26,40 @@ const HERO_VIDEOS = [
   "https://api.liveodi.com/assets/videos/covers-07-testimonio.mp4",
   "https://api.liveodi.com/assets/videos/covers-08-3pasos.mp4",
   "https://api.liveodi.com/assets/videos/covers-09-ninos.mp4",
-  "https://api.liveodi.com/assets/videos/covers-10-odi.mp4",
 ];
 
 function HeroVideo() {
   const refA = useRef<HTMLVideoElement>(null);
   const refB = useRef<HTMLVideoElement>(null);
+  const blobs = useRef<string[]>([]);
   const idx = useRef(0);
   const current = useRef<"a" | "b">("a");
 
-  const getEls = () => ({ a: refA.current!, b: refB.current! });
+  // Preload all videos as blobs on mount
+  useState(() => {
+    HERO_VIDEOS.forEach((url, i) => {
+      fetch(url).then(r => r.blob()).then(b => {
+        blobs.current[i] = URL.createObjectURL(b);
+      });
+    });
+  });
+
+  const getUrl = (i: number) => blobs.current[i] || HERO_VIDEOS[i];
 
   const swap = () => {
-    const { a, b } = getEls();
+    const a = refA.current!;
+    const b = refB.current!;
     idx.current = (idx.current + 1) % HERO_VIDEOS.length;
     const next = current.current === "a" ? b : a;
     const prev = current.current === "a" ? a : b;
-    next.src = HERO_VIDEOS[idx.current];
+    next.src = getUrl(idx.current);
     next.play();
     next.style.opacity = "1";
     prev.style.opacity = "0";
     current.current = current.current === "a" ? "b" : "a";
-    // Preload next
+    // Preload next in other element
     const nextIdx = (idx.current + 1) % HERO_VIDEOS.length;
-    prev.src = HERO_VIDEOS[nextIdx];
+    prev.src = getUrl(nextIdx);
     prev.load();
   };
 
@@ -775,7 +785,8 @@ function Nav() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-navy/95 backdrop-blur-md border-b border-white/10">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="#" className="text-white font-bold text-lg tracking-tight">
-          COVER'S <span className="text-teal font-normal text-sm ml-1">Bruxismo</span>
+          <img src={img("covers-logo.png")} alt="COVER'S" className="h-8 w-auto inline-block mr-2" />
+          <span className="text-teal font-normal text-sm">Bruxismo</span>
         </a>
         <div className="hidden md:flex items-center gap-6">
           {[
