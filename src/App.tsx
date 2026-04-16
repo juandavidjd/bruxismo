@@ -18,7 +18,7 @@ const stagger = { visible: { transition: { staggerChildren: 0.12 } } };
    ═══════════════════════════════════════════ */
 function Hero() {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[70vh] md:min-h-[90vh] flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <img
           src={img("bruxismo-persona-durmiendo-tension.jpg")}
@@ -238,7 +238,7 @@ function LineasCovers() {
                 className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-100"
               >
                 <div className="relative">
-                  <img src={img(l.img)} alt={l.name} className="w-full h-56 object-cover" />
+                  <img src={img(l.img)} alt={l.name} className="w-full h-48 md:h-56 object-cover" />
                   <span className={`absolute top-4 left-4 ${l.color} text-white text-xs font-semibold px-3 py-1 rounded-full`}>
                     {l.tag}
                   </span>
@@ -291,7 +291,7 @@ function Proceso() {
               <motion.div key={i} variants={fade} className="text-center">
                 <div className="relative mb-6">
                   <img src={img(p.image)} alt={p.title}
-                    className="w-full h-48 object-cover rounded-xl"
+                    className="w-full h-40 md:h-48 object-cover rounded-xl"
                   />
                   <span className="absolute -top-3 -left-3 w-10 h-10 bg-teal text-white font-bold rounded-full flex items-center justify-center text-sm shadow-lg">
                     {p.step}
@@ -417,11 +417,11 @@ function CursoINEC() {
         {/* IMAGENES: ODONTOLOGA + 3 LINEAS */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid md:grid-cols-2 gap-8">
           <motion.div variants={fade}>
-            <img src={img("curso-odontologa-paciente.jpg")} alt="Odontologa con paciente" className="rounded-2xl shadow-xl w-full h-72 object-cover" />
+            <img src={img("curso-odontologa-paciente.jpg")} alt="Odontologa con paciente" className="rounded-2xl shadow-xl w-full h-52 md:h-72 object-cover" />
             <p className="text-center text-sm text-gray-400 mt-3">Sesion practica: impresion dental en paciente real</p>
           </motion.div>
           <motion.div variants={fade}>
-            <img src={img("tres-lineas-covers.jpg")} alt="3 lineas COVERS" className="rounded-2xl shadow-xl w-full h-72 object-cover" />
+            <img src={img("tres-lineas-covers.jpg")} alt="3 lineas COVERS" className="rounded-2xl shadow-xl w-full h-52 md:h-72 object-cover" />
             <p className="text-center text-sm text-gray-400 mt-3">Medical · Sport · Smokover — fabricacion personalizada</p>
           </motion.div>
         </motion.div>
