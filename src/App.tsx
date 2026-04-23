@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Shield, AlertTriangle, Moon, Headphones, ChevronDown,
-  Phone, Mail, CheckCircle2, ArrowRight, Menu, X,
+  Phone, Mail, CheckCircle2, ArrowRight, Menu, X, BookOpen,
 } from "lucide-react";
 
 const CDN = "https://api.liveodi.com/covers/bruxismo/images";
@@ -811,6 +812,121 @@ function Nav() {
 }
 
 /* ═══════════════════════════════════════════
+   CONFERENCIAS Y TALLERES (entry)
+   ═══════════════════════════════════════════ */
+function ConferenciasSection() {
+  return (
+    <section
+      id="conferencias"
+      style={{
+        padding: "80px 24px",
+        background: "#F1F9FB",
+        borderTop: "1px solid #D6E4EA",
+        borderBottom: "1px solid #D6E4EA",
+      }}
+    >
+      <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
+        <motion.div
+          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
+          style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: "48px", alignItems: "center" }}
+          className="conferencias-grid"
+        >
+          <motion.div variants={fade}>
+            <span
+              style={{
+                display: "inline-block",
+                fontFamily: "Inter, system-ui, sans-serif",
+                fontSize: "11px",
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                color: "#088395",
+                fontWeight: 600,
+                marginBottom: "14px",
+              }}
+            >
+              COVER'S EDUCACIÓN
+            </span>
+            <h2
+              style={{
+                fontFamily: "Georgia, serif",
+                fontSize: "clamp(28px, 4vw, 40px)",
+                lineHeight: 1.15,
+                letterSpacing: "-0.01em",
+                color: "#0A4D68",
+                fontWeight: 700,
+                margin: 0,
+              }}
+            >
+              Conferencias y talleres
+            </h2>
+            <p
+              style={{
+                fontFamily: "Inter, system-ui, sans-serif",
+                fontSize: "17px",
+                lineHeight: 1.6,
+                color: "#5A6C7D",
+                marginTop: "14px",
+                marginBottom: 0,
+                maxWidth: "560px",
+              }}
+            >
+              Sesiones educativas presenciales y virtuales para odontólogos, deportistas y
+              comunidades. Exposiciones clínicas con respaldo científico del equipo médico COVER'S.
+            </p>
+            <p
+              style={{
+                fontFamily: "Inter, system-ui, sans-serif",
+                fontSize: "13px",
+                color: "#94A3AE",
+                marginTop: "10px",
+              }}
+            >
+              Primera exposición disponible: <strong style={{ color: "#0A4D68" }}>Bruxismo — anatomía, función e impacto sistémico</strong> · 17 diapositivas
+            </p>
+          </motion.div>
+          <motion.div variants={fade} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <Link
+              to="/conferencias"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "10px",
+                padding: "14px 28px",
+                border: "1.5px solid #0A4D68",
+                color: "#0A4D68",
+                background: "transparent",
+                borderRadius: "8px",
+                fontFamily: "Inter, system-ui, sans-serif",
+                fontSize: "15px",
+                fontWeight: 600,
+                textDecoration: "none",
+                transition: "all 200ms ease-out",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.background = "#0A4D68";
+                (e.currentTarget as HTMLElement).style.color = "#FFFFFF";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.background = "transparent";
+                (e.currentTarget as HTMLElement).style.color = "#0A4D68";
+              }}
+            >
+              <BookOpen size={18} strokeWidth={2} />
+              Ver exposiciones
+            </Link>
+          </motion.div>
+        </motion.div>
+      </div>
+      <style>{`
+        @media (max-width: 720px) {
+          .conferencias-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════
    APP
    ═══════════════════════════════════════════ */
 export default function App() {
@@ -827,6 +943,7 @@ export default function App() {
         <div id="lineas"><LineasCovers /></div>
         <div id="proceso"><Proceso /></div>
         <div id="curso"><CursoINEC /></div>
+        <ConferenciasSection />
         <Contacto />
       </main>
       <Footer />

@@ -1,0 +1,70 @@
+{
+  "01-portada": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/01-portada.jpg",
+    "alt": "Ilustración médica de mandíbula y articulación temporomandibular sobre fondo teal"
+  },
+  "02-agenda": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/02-agenda.jpg",
+    "alt": "Diagrama minimalista de seis secciones de la exposición"
+  },
+  "03-definicion": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/03-definicion.jpg",
+    "alt": "Composición de bruxismo del sueño y bruxismo de vigilia"
+  },
+  "04-sistema-estomatognatico": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/04-sistema-estomatognatico.jpg",
+    "alt": "Sección anatómica lateral del sistema estomatognático"
+  },
+  "05-huesos": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/05-huesos.jpg",
+    "alt": "Cráneo lateral con huesos del sistema estomatognático resaltados"
+  },
+  "06-atm-condilo": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/06-atm-condilo.jpg",
+    "alt": "Corte anatómico detallado de la articulación temporomandibular"
+  },
+  "07-musculos-elevadores": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/07-musculos-elevadores.jpg",
+    "alt": "Vista lateral de músculos masetero y temporal sobre el cráneo"
+  },
+  "08-depresores-suprahioideos": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/08-depresores-suprahioideos.jpg",
+    "alt": "Sección anatómica profunda de pterigoideo lateral y suprahioideos"
+  },
+  "09-movimientos": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/09-movimientos.jpg",
+    "alt": "Diagrama de los cinco movimientos mandibulares"
+  },
+  "10-fisiopatologia": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/10-fisiopatologia.jpg",
+    "alt": "Cascada de cuatro etapas de daño del bruxismo"
+  },
+  "11-mapa-dolor": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/11-mapa-dolor.jpg",
+    "alt": "Silueta humana con zonas de dolor resaltadas"
+  },
+  "12-orofacial": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/12-orofacial.jpg",
+    "alt": "Macro de diente con desgaste oclusal"
+  },
+  "13-cefalea": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/13-cefalea.jpg",
+    "alt": "Retrato de persona con cefalea matinal"
+  },
+  "14-cervical": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/14-cervical.jpg",
+    "alt": "Vista lateral de músculos cervicales"
+  },
+  "15-espalda-postura": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/15-espalda-postura.jpg",
+    "alt": "Silueta lateral con cadena miofascial descendente"
+  },
+  "16-signos-clinicos": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/16-signos-clinicos.jpg",
+    "alt": "Composición de paciente y clínico en evaluación"
+  },
+  "17-covers-cierre": {
+    "url": "https://api.liveodi.com/covers/bruxismo/conferencias/images/17-covers-cierre.jpg",
+    "alt": "Composición abstracta de las tres líneas COVER'S"
+  }
+}
