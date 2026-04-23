@@ -30,25 +30,43 @@ export function ExposicionCarousel() {
   const slides = exposicionBruxismo.slides;
   const cardSize = useCardSize();
 
-  const autoplay = useRef(
+  // Detect reduced motion ONCE at init — so we decide if plugin runs at all.
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  // Plugin instance stable across renders. playOnInit false when reduced motion.
+  const autoplayRef = useRef(
     Autoplay({
       delay: 5000,
       stopOnMouseEnter: true,
       stopOnInteraction: false,
-      playOnInit: true,
+      playOnInit: !prefersReducedMotion,
     })
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "start", dragFree: false, containScroll: "trimSnaps" },
-    [autoplay.current]
+    [autoplayRef.current]
   );
 
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(!prefersReducedMotion);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
+  // Helper: safely access autoplay plugin ONLY after emblaApi is ready.
+  const getAutoplay = useCallback(() => {
+    if (!emblaApi) return null;
+    try {
+      const plugins = emblaApi.plugins?.();
+      return plugins?.autoplay ?? null;
+    } catch {
+      return null;
+    }
+  }, [emblaApi]);
+
   const togglePlay = useCallback(() => {
-    const ap = autoplay.current;
+    const ap = getAutoplay();
+    if (!ap) return;
     if (isPlaying) {
       ap.stop();
       setIsPlaying(false);
@@ -56,35 +74,31 @@ export function ExposicionCarousel() {
       ap.play();
       setIsPlaying(true);
     }
-  }, [isPlaying]);
+  }, [isPlaying, getAutoplay]);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
-  // Prefers-reduced-motion stops autoplay
+  // Pause when tab hidden — guard on emblaApi readiness
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mq.matches) {
-      autoplay.current.stop();
-      setIsPlaying(false);
-    }
-  }, []);
-
-  // Pause when tab hidden
-  useEffect(() => {
+    if (!emblaApi) return;
     const onVis = () => {
-      if (document.hidden) autoplay.current.stop();
-      else if (isPlaying) autoplay.current.play();
+      const ap = getAutoplay();
+      if (!ap) return;
+      if (document.hidden) ap.stop();
+      else if (isPlaying) ap.play();
     };
     document.addEventListener("visibilitychange", onVis);
     return () => document.removeEventListener("visibilitychange", onVis);
-  }, [isPlaying]);
+  }, [emblaApi, getAutoplay, isPlaying]);
 
   // Pause when lightbox open
   useEffect(() => {
-    if (lightboxIdx !== null) autoplay.current.stop();
-    else if (isPlaying) autoplay.current.play();
-  }, [lightboxIdx, isPlaying]);
+    const ap = getAutoplay();
+    if (!ap) return;
+    if (lightboxIdx !== null) ap.stop();
+    else if (isPlaying) ap.play();
+  }, [lightboxIdx, isPlaying, getAutoplay]);
 
   // Sync carousel to lightbox nav
   const openLightbox = (idx: number) => {
@@ -108,10 +122,7 @@ export function ExposicionCarousel() {
   return (
     <section
       aria-label={`Exposición ${exposicionBruxismo.titulo}`}
-      style={{
-        padding: "32px 0 48px",
-        background: "var(--covers-bg)",
-      }}
+      style={{ padding: "32px 0 48px", background: "var(--covers-bg)" }}
     >
       {/* Header */}
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 32px 24px" }}>
@@ -157,18 +168,12 @@ export function ExposicionCarousel() {
       <div className="embla" ref={emblaRef} aria-label="Carrusel de diapositivas">
         <div className="embla__container">
           {slides.map((slide, i) => (
-            <div key={slide.id} className="embla__slide" style={{ width: `${cardSize.w}px` }}>
-              <SlideCard
-                slide={slide}
-                onOpen={() => openLightbox(i)}
-                sizeClass=""
-              />
-              <style>{`
-                .embla__slide:nth-child(${i + 1}) > article {
-                  width: ${cardSize.w}px;
-                  height: ${cardSize.h}px;
-                }
-              `}</style>
+            <div
+              key={slide.id}
+              className="embla__slide"
+              style={{ width: `${cardSize.w}px`, height: `${cardSize.h}px`, flex: "0 0 auto" }}
+            >
+              <SlideCard slide={slide} onOpen={() => openLightbox(i)} sizeClass="w-full h-full" />
             </div>
           ))}
         </div>
