@@ -565,6 +565,15 @@ function CursoINEC() {
                   rows={3} placeholder="Cuentanos sobre tu experiencia y que esperas del curso..." />
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
+              {/* OC-#227: banner consentimiento Habeas Data Ley 1581/2012 */}
+              <label className="flex items-start gap-2 text-xs text-gray-600 leading-relaxed">
+                <input type="checkbox" required className="mt-1 flex-shrink-0" />
+                <span>
+                  Autorizo el tratamiento de mis datos personales conforme a la
+                  {" "}<a href="/privacy" target="_blank" className="text-accent underline">Política de Privacidad</a>
+                  {" "}y los <a href="/terms" target="_blank" className="text-accent underline">Términos</a>.
+                </span>
+              </label>
               <button type="submit" disabled={sending}
                 className="w-full bg-accent hover:bg-accent/90 disabled:opacity-50 text-white py-4 rounded-xl font-semibold text-lg transition-all shadow-lg shadow-accent/25 flex items-center justify-center gap-2">
                 {sending ? "Enviando..." : <><ArrowRight className="w-5 h-5" /> Quiero inscribirme</>}
@@ -694,6 +703,15 @@ function Contacto() {
                 />
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
+              {/* OC-#227: banner consentimiento Habeas Data Ley 1581/2012 */}
+              <label className="flex items-start gap-2 text-xs text-gray-600 leading-relaxed">
+                <input type="checkbox" required className="mt-1 flex-shrink-0" />
+                <span>
+                  Autorizo el tratamiento de mis datos personales conforme a la
+                  {" "}<a href="/privacy" target="_blank" className="text-accent underline">Política de Privacidad</a>
+                  {" "}y los <a href="/terms" target="_blank" className="text-accent underline">Términos</a>.
+                </span>
+              </label>
               <button
                 type="submit" disabled={sending}
                 className="w-full bg-accent hover:bg-accent/90 disabled:opacity-50 text-white py-3 rounded-xl font-semibold transition-all shadow-lg shadow-accent/25"
@@ -748,6 +766,8 @@ function Footer() {
         <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-xs">
             © {new Date().getFullYear()} COVER'S Lab — Todos los derechos reservados
+            {" · "}<a href="/privacy" className="hover:text-teal underline">Privacidad</a>
+            {" · "}<a href="/terms" className="hover:text-teal underline">Términos</a>
           </p>
           <p className="text-gray-600 text-xs">
             Generado por ODI · Somos Industrias ODI
